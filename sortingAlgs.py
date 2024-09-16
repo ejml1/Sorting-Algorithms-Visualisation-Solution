@@ -12,17 +12,53 @@ def bubble_sort(data, timeTick):
                 drawSwap(data, j, j + 1, i, timeTick)
         drawCorrectPositionGreaterEqualThanOuterLoop(data, i, timeTick)
 
+########################################################################################################################
+### Drawing Methods ####################################################################################################
+
 def drawComparison(data, pos1, pos2, outerLoopIndex, timeTick):
-    colorArray = ['slategrey' if x == pos1 or x == pos2 else 'green' if x > len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
+    """Method that should be called after each iteration of the INNER loop to show the comparison between two elements 
+    in pos1 and pos2. This will highlight the elements being compared in gray
+
+    Args:
+        data (int[])
+        pos1 (int): The position of the first element being compared
+        pos2 (int): The position of the second element being compared
+        outerLoopIndex (int): The current index of the outer loop
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['slategrey' if x == pos1 or x == pos2 else 'green' 
+                  if x > len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
     drawData(data, colorArray, timeTick)
     
 def drawSwap(data, pos1, pos2, outerLoopIndex, timeTick):
-    colorArray = ['blue' if x == pos1 or x == pos2 else 'green' if x > len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
+    """Method that should be called after two elements are swapped in pos1 and pos2. 
+    This will highlight the elements in blue
+
+    Args:
+        data (int[])
+        pos1 (int): The position of the first element being swapped
+        pos2 (int): The position of the second element being swapped
+        outerLoopIndex (int): The current index of the outer loop
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['blue' if x == pos1 or x == pos2 else 'green' 
+                  if x > len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
     drawData(data, colorArray, timeTick)
 
 def drawCorrectPositionGreaterEqualThanOuterLoop(data, outerLoopIndex, timeTick):
+    """Method that should be called after each iteration of the OUTER loop to which elements are in the correct position
+
+    Args:
+        data (int[])
+        outerLoopIndex (int): The current index of the outer loop
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
     colorArray = ['green' if x >= len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
     drawData(data, colorArray, timeTick)
+
+
+########################################################################################################################
+### Other Methods ######################################################################################################
 
 root = Tk()
 root.title('Sorting Algorithm Visualisation')
@@ -32,7 +68,6 @@ root.config(bg='black')
 selected_alg = StringVar()
 data = []
 
-#function
 def drawData(data, colorArray, timeTick):
     canvas.delete("all")
     c_height = 380
@@ -82,7 +117,7 @@ canvas.grid(row=1, column=0, padx=10, pady=5)
 #User Interface Area
 #Row[0]
 Label(UI_frame, text="Algorithm: ", bg='grey').grid(row=0, column=0, padx=5, pady=5, sticky=W)
-algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort', 'Merge Sort'])
+algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort'])
 algMenu.grid(row=0, column=1, padx=5, pady=5)
 algMenu.current(0)
 
