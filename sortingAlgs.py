@@ -18,12 +18,14 @@ def merge_sort(data, timeTick):
 
 def merge_sort_alg(data, left, right, timeTick):
     if left < right:
+        drawSplit(data, left, right, timeTick)
         middle = (left + right) // 2
         merge_sort_alg(data, left, middle, timeTick)
         merge_sort_alg(data, middle + 1, right, timeTick)
         merge(data, left, middle, right, timeTick)
 
 def merge(data, left, middle, right, timeTick):
+    drawMergeStart(data, left, middle, right, timeTick)
     leftPart = data[left:middle + 1]
     rightPart = data[middle + 1: right + 1]
 
@@ -43,6 +45,9 @@ def merge(data, left, middle, right, timeTick):
         else:
             data[dataIdx] = rightPart[rightIdx]
             rightIdx += 1
+    
+    drawSwapMerge(data, left, right, timeTick)
+
 
 ########################################################################################################################
 ### Drawing Methods ####################################################################################################
@@ -88,9 +93,52 @@ def drawCorrectPositionGreaterEqualThanOuterLoop(data, outerLoopIndex, timeTick)
     colorArray = ['green' if x >= len(data) - outerLoopIndex - 1 else 'red' for x in range(len(data))]
     drawData(data, colorArray, timeTick)
 
+########################################################################################################################
+### Merge Sort Drawing Methods #########################################################################################
+
+def drawSplit(data, left, right, timeTick):
+    """Method that should be called to visualise the splting the data array into a left and right part
+
+    Args:
+        data (int[])
+        left (int): left index of data
+        right (int): right index of data
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['slategrey' if left <= x <= right else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
+
+def drawMergeStart(data, left, middle, right, timeTick):
+    """Method that should be called before the merge process to visualise the left and right part of the section being merged
+
+    Args:
+        data (int[])
+        left (int): left index of data
+        middle (int): middle index of data
+        right (int): right index of data
+        timeTick (_type_): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['cornflowerblue' if left <= x < middle + 1 else 'lightsteelblue' if middle + 1 <= x <= right else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
+
+def drawSwapMerge(data, left, right, timeTick):
+    """Method that should be called after the merge process to visualise the merged section
+
+    Args:
+        data (int[])
+        left (double): left index of data
+        right (double): right index of data
+        timeTick (double): The time delay between each iteration of the algorithm as defined on the UI
+    """
+    colorArray = ['blue' if left <= x <= right else 'red' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
 
 ########################################################################################################################
 ### Other Methods ######################################################################################################
+
+def drawComplete(data, timeTick):
+    colorArray = ['green' for x in range(len(data))]
+    drawData(data, colorArray, timeTick)
 
 root = Tk()
 root.title('Sorting Algorithm Visualisation')
@@ -137,7 +185,12 @@ def generate():
 
 def StartAlgorithm():
     global data
-    bubble_sort(data, speedScale.get())
+    if algMenu.get() == 'Bubble Sort':
+        bubble_sort(data, speedScale.get())
+    elif algMenu.get() == 'Merge Sort':
+        merge_sort(data, speedScale.get())
+
+    drawComplete(data, speedScale.get())
 
 #frame / base lauout
 UI_frame = Frame(root, width= 600, height=200, bg='grey')
@@ -149,7 +202,7 @@ canvas.grid(row=1, column=0, padx=10, pady=5)
 #User Interface Area
 #Row[0]
 Label(UI_frame, text="Algorithm: ", bg='grey').grid(row=0, column=0, padx=5, pady=5, sticky=W)
-algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort'])
+algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort', 'Merge Sort'])
 algMenu.grid(row=0, column=1, padx=5, pady=5)
 algMenu.current(0)
 
@@ -170,3 +223,4 @@ maxEntry.grid(row=1, column=2, padx=5, pady=5)
 Button(UI_frame, text="Generate", command=generate, bg='white').grid(row=1, column=3, padx=5, pady=5)
 
 root.mainloop()
+
