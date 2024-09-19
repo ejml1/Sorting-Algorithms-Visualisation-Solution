@@ -241,7 +241,16 @@ def StartAlgorithm():
     elif algMenu.get() == 'Merge Sort':
         merge_sort(data, speedScale.get())
 
-    drawComplete(data, speedScale.get())
+    if isSorted(data):
+        drawComplete(data, speedScale.get())
+    else:
+        drawData(data, ['red' for x in range(len(data))], 0.1)
+
+def isSorted(data):
+    for i in range(len(data) - 1):
+        if data[i] > data[i + 1]:
+            return False
+    return True
 
 #frame / base lauout
 UI_frame = Frame(root, width= 600, height=200, bg='grey')
