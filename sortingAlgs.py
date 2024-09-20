@@ -92,7 +92,7 @@ def drawBubbleSortSwap(data, pos1, pos2, outerLoopIndex, timeTick):
     drawData(data, colorArray, timeTick)
 
 def drawCorrectPositionGreaterEqualThanOuterLoop(data, outerLoopIndex, timeTick):
-    """Method that should be called after each iteration of the OUTER loop to which elements are in the correct position
+    """Method that should be called at each iteration of the OUTER loop to which elements are in the correct position
 
     Args:
         data (int[])
@@ -106,7 +106,7 @@ def drawCorrectPositionGreaterEqualThanOuterLoop(data, outerLoopIndex, timeTick)
 ### Selection Sort Drawing Methods #####################################################################################
 
 def drawSelectionSortCompletedSection(data, index, timeTick):
-    """Method that should be called after each iteration of the OUTER loop to show the completed section of the array
+    """Method that should be called at each iteration of the OUTER loop to show the completed section of the array
 
     Args:
         data (int[])
