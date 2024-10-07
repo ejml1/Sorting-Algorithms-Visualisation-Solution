@@ -234,6 +234,9 @@ def generate():
 
 def StartAlgorithm():
     global data
+    global generateButton
+
+    generateButton['state'] = 'disabled'
     if algMenu.get() == 'Bubble Sort':
         bubble_sort(data, speedScale.get())
     elif algMenu.get() == 'Selection Sort':
@@ -245,6 +248,8 @@ def StartAlgorithm():
         drawComplete(data, speedScale.get())
     else:
         drawData(data, ['red' for x in range(len(data))], 0.1)
+
+    generateButton['state'] = 'normal'
 
 def isSorted(data):
     for i in range(len(data) - 1):
@@ -280,7 +285,8 @@ minEntry.grid(row=1, column=1, padx=5, pady=5)
 maxEntry = Scale(UI_frame, from_=10, to=100, resolution=1, orient=HORIZONTAL, label="Max Value")
 maxEntry.grid(row=1, column=2, padx=5, pady=5)
 
-Button(UI_frame, text="Generate", command=generate, bg='white').grid(row=1, column=3, padx=5, pady=5)
+generateButton = Button(UI_frame, text="Generate", command=generate, bg='white')
+generateButton.grid(row=1, column=3, padx=5, pady=5)
 
 root.mainloop()
 
